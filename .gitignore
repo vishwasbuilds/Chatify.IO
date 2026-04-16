@@ -1,0 +1,18 @@
+# --- CHATIFY.IO SPECIFIC IGNORES ---
+
+# Ignore the heavy stuff in both sub-folders
+backend/node_modules/
+frontend/node_modules/
+
+# Ignore secrets in both places
+backend/.env
+frontend/.env
+.env
+
+# Ignore tutorial/external code
+SOURCE-CODES/
+frontend-starter/
+
+# Ignore build outputs (if you deploy later)
+frontend/dist/
+frontend/build/
