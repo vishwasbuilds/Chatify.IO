@@ -1,4 +1,4 @@
-import { Box, Flex, useToast } from "@chakra-ui/react";
+import { Box, Flex, useToast, useColorModeValue } from "@chakra-ui/react";
 import Sidebar from "../components/Sidebar";
 import ChatArea from "../components/ChatArea";
 import io from "socket.io-client";
@@ -64,12 +64,16 @@ const Chat = () => {
   }, [selectedGroup]);
 
   return (
-    <Flex h="100vh" direction={{ base: "column", md: "row" }}>
+    <Flex
+      h="100vh"
+      direction={{ base: "column", md: "row" }}
+      bg={useColorModeValue("white", "gray.900")}
+    >
       <Box
         w={{ base: "100%", md: "300px" }}
         h={{ base: "auto", md: "100vh" }}
         borderRight="1px solid"
-        borderColor="gray.200"
+        borderColor={useColorModeValue("gray.200", "gray.700")}
         display={{ base: selectedGroup ? "none" : "block", md: "block" }}
       >
         <Sidebar

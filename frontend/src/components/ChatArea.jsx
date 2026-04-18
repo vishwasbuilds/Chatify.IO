@@ -18,6 +18,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import UsersList from "./UsersList";
 import { useRef, useState, useEffect } from "react";
@@ -35,6 +36,14 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup, fetchGroups }) => {
   const inputRef = useRef(null);
   const typingTimeoutRef = useRef(null);
   const toast = useToast();
+
+  const chatBg = useColorModeValue("gray.50", "gray.900");
+  const headerFooterBg = useColorModeValue("white", "gray.900");
+  const borderColor = useColorModeValue("gray.200", "gray.700");
+  const textColor = useColorModeValue("gray.800", "white");
+  const mutedTextColor = useColorModeValue("gray.500", "gray.400");
+  const inputBg = useColorModeValue("gray.50", "gray.800");
+  const messageBgOther = useColorModeValue("white", "gray.800");
   const {
     isOpen: isInfoOpen,
     onOpen: onInfoOpen,
@@ -325,7 +334,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup, fetchGroups }) => {
         flex="1"
         display="flex"
         flexDirection="column"
-        bg="gray.50"
+        bg={chatBg}
         maxW={{ base: "100%", lg: `calc(100% - 260px)` }}
       >
         {selectedGroup ? (
@@ -335,10 +344,10 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup, fetchGroups }) => {
               py={0}
               h="72px"
               align="center"
-              bg="white"
+              bg={headerFooterBg}
               borderBottom="1px solid"
-              borderColor="gray.200"
-              boxShadow="sm"
+              borderColor={borderColor}
+              boxShadow={useColorModeValue("sm", "none")}
             >
               <Button
                 display={{ base: "inline-flex", md: "none" }}
@@ -358,7 +367,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup, fetchGroups }) => {
                 <Text
                   fontSize="lg"
                   fontWeight="bold"
-                  color="gray.800"
+                  color={textColor}
                   noOfLines={1}
                 >
                   {selectedGroup.name}
@@ -489,9 +498,9 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup, fetchGroups }) => {
               h="80px"
               display="flex"
               alignItems="center"
-              bg="white"
               borderTop="1px solid"
-              borderColor="gray.200"
+              bg={useColorModeValue("white", "gray.900")}
+              borderColor={useColorModeValue("gray.200", "gray.700")}
               position="relative"
               zIndex="1"
             >
@@ -502,9 +511,16 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup, fetchGroups }) => {
                   onChange={handleTyping}
                   placeholder="Type your message..."
                   pr="4.5rem"
-                  bg="gray.50"
+                  bg={useColorModeValue("gray.50", "gray.800")}
+                  color={useColorModeValue("gray.800", "white")}
+                  _placeholder={{
+                    color: useColorModeValue("gray.400", "gray.500"),
+                  }}
                   border="none"
-                  _focus={{ boxShadow: "none", bg: "gray.100" }}
+                  _focus={{
+                    boxShadow: "none",
+                    bg: useColorModeValue("gray.100", "gray.700"),
+                  }}
                   onKeyPress={(e) => {
                     if (e.key === "Enter") sendMessage();
                   }}
@@ -558,7 +574,7 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup, fetchGroups }) => {
       <Modal isOpen={isInfoOpen} onClose={onInfoClose} isCentered>
         <ModalOverlay backdropFilter="blur(4px)" />
         <ModalContent>
-          <ModalHeader borderBottomWidth="1px" color="gray.800">
+          <ModalHeader borderBottomWidth="1px" color={textColor}>
             {selectedGroup?.name} - Details
           </ModalHeader>
           <ModalCloseButton />
@@ -566,13 +582,13 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup, fetchGroups }) => {
             <Text
               fontWeight="bold"
               mb={2}
-              color="gray.500"
+              color={mutedTextColor}
               fontSize="xs"
               letterSpacing="wider"
             >
               DESCRIPTION
             </Text>
-            <Text color="gray.700" fontSize="md" lineHeight="tall" mb={6}>
+            <Text color={textColor} fontSize="md" lineHeight="tall" mb={6}>
               {selectedGroup?.description ||
                 "No description provided for this group."}
             </Text>

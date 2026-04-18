@@ -18,6 +18,7 @@ import {
   Icon,
   Badge,
   Tooltip,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { FiLogOut, FiPlus, FiUsers } from "react-icons/fi";
@@ -32,6 +33,20 @@ const Sidebar = ({
   userGroups,
   fetchGroups,
 }) => {
+  const sidebarBg = useColorModeValue("white", "gray.900");
+  const sidebarBorder = useColorModeValue("gray.200", "gray.700");
+  const headerTextColor = useColorModeValue("gray.800", "white");
+  const plusIconColor = useColorModeValue("blue.600", "blue.200");
+  const footerBg = useColorModeValue("gray.50", "gray.800");
+
+  const groupBgJoined = useColorModeValue("blue.50", "blue.900");
+  const groupBgUnjoined = useColorModeValue("gray.50", "gray.800");
+  const groupBorderJoined = useColorModeValue("blue.200", "blue.700");
+  const groupBorderUnjoined = useColorModeValue("gray.200", "gray.700");
+  const textColor = useColorModeValue("gray.800", "white");
+  const badgeVariant = useColorModeValue("subtle", "solid");
+  const logoutHoverBg = useColorModeValue("red.50", "whiteAlpha.100");
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [newGroupName, setNewGroupName] = useState("");
   const [newGroupDescription, setNewGroupDescription] = useState("");
@@ -145,9 +160,9 @@ const Sidebar = ({
   return (
     <Box
       h={{ base: "calc(100vh - 60px)", md: "100%" }}
-      bg="white"
       borderRight="1px"
-      borderColor="gray.200"
+      bg={sidebarBg} // Changed this
+      borderColor={sidebarBorder} // Changed this
       width={{ base: "100%", md: "300px" }}
       display="flex"
       flexDirection="column"
@@ -158,8 +173,8 @@ const Sidebar = ({
         h="72px"
         align="center"
         borderBottom="1px solid"
-        borderColor="gray.200"
-        bg="white"
+        bg={sidebarBg}
+        borderColor={sidebarBorder}
         position="sticky"
         top={0}
         zIndex={1}
@@ -168,7 +183,7 @@ const Sidebar = ({
       >
         <Flex align="center">
           <Icon as={FiUsers} fontSize="24px" color="blue.500" mr={2} />
-          <Text fontSize="xl" fontWeight="bold" color="gray.800">
+          <Text fontSize="xl" fontWeight="bold" color={headerTextColor}>
             Groups
           </Text>
         </Flex>
@@ -181,7 +196,7 @@ const Sidebar = ({
               onClick={onOpen}
               borderRadius="full"
             >
-              <Icon as={FiPlus} fontSize="20px" />
+              <Icon as={FiPlus} fontSize="20px" color={plusIconColor} />
             </Button>
           </Tooltip>
         )}
@@ -195,7 +210,16 @@ const Sidebar = ({
               p={4}
               cursor="pointer"
               borderRadius="lg"
-              bg={userGroups?.includes(group?._id) ? "blue.50" : "gray.50"}
+              bg={
+                userGroups?.includes(group?._id)
+                  ? groupBgJoined
+                  : groupBgUnjoined
+              }
+              borderColor={
+                userGroups?.includes(group?._id)
+                  ? groupBorderJoined
+                  : groupBorderUnjoined
+              }
               borderWidth="1px"
               borderColor={
                 userGroups?.includes(group?._id) ? "blue.200" : "gray.200"
@@ -210,11 +234,12 @@ const Sidebar = ({
               <Flex justify="space-between" align="center">
                 <Box onClick={() => setSelectedGroup(group)} flex="1">
                   <Flex align="center" mb={2}>
-                    <Text fontWeight="bold" color="gray.800">
+                    <Text fontWeight="bold" color={textColor}>
                       {group.name}
                     </Text>
+
                     {userGroups?.includes(group?._id) && (
-                      <Badge ml={2} colorScheme="blue" variant="subtle">
+                      <Badge ml={2} colorScheme="blue" variant={badgeVariant}>
                         Joined
                       </Badge>
                     )}
@@ -249,8 +274,8 @@ const Sidebar = ({
         display="flex"
         alignItems="center"
         borderTop="1px solid"
-        borderColor="gray.200"
-        bg="gray.50"
+        borderColor={sidebarBorder}
+        bg={footerBg}
         position="fixed"
         bottom={0}
         left={0}
@@ -264,7 +289,7 @@ const Sidebar = ({
           colorScheme="red"
           leftIcon={<Icon as={FiLogOut} />}
           _hover={{
-            bg: "red.50",
+            bg: logoutHoverBg,
             transform: "translateY(-2px)",
             shadow: "md",
           }}

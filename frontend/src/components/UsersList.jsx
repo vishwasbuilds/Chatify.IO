@@ -7,19 +7,29 @@ import {
   Icon,
   Tooltip,
   Avatar,
+  useColorModeValue,
+  useColorMode,
+  IconButton,
 } from "@chakra-ui/react";
-import { FiUsers, FiCircle } from "react-icons/fi";
+import { FiUsers, FiCircle, FiMoon, FiSun } from "react-icons/fi";
 
 const UsersList = ({ users }) => {
+  const { colorMode, toggleColorMode } = useColorMode();
+  const headerBg = useColorModeValue("white", "gray.900");
+  const headerBorder = useColorModeValue("gray.200", "gray.700");
+  const cardBg = useColorModeValue("white", "gray.800");
+  const cardBorder = useColorModeValue("gray.100", "gray.700");
+  const userNameColor = useColorModeValue("gray.700", "whiteAlpha.900");
+  const onlineBg = useColorModeValue("green.50", "rgba(72, 187, 120, 0.1)");
+  const onlineColor = useColorModeValue("green.600", "green.300");
   return (
     <Box
-      h="100%"
-      w="100%"
+      width="260px"
+      bg={useColorModeValue("white", "gray.900")}
       borderLeft="1px solid"
-      borderColor="gray.200"
-      bg="white"
-      position="relative"
-      overflow="hidden"
+      borderColor={useColorModeValue("gray.200", "gray.700")}
+      height="100vh"
+      overflowY="auto"
     >
       {/* Header */}
       <Flex
@@ -27,28 +37,43 @@ const UsersList = ({ users }) => {
         py={0}
         h="72px"
         align="center"
+        justify="space-between"
         borderBottom="1px solid"
-        borderColor="gray.200"
-        bg="white"
+        borderColor={headerBorder}
+        bg={headerBg}
         position="sticky"
         top={0}
         zIndex={1}
         boxShadow="sm"
       >
-        <Icon as={FiUsers} fontSize="20px" color="blue.500" mr={2} />
-        <Text fontSize="lg" fontWeight="bold" color="gray.700">
-          Members
-        </Text>
-        <Badge
-          ml={2}
-          colorScheme="blue"
-          borderRadius="full"
-          px={2}
-          py={0.5}
-          fontSize="xs"
-        >
-          {users.length}
-        </Badge>
+        <Flex align="center">
+          <Icon as={FiUsers} fontSize="20px" color="blue.500" mr={2} />
+          <Text
+            fontWeight="bold"
+            fontSize="lg"
+            color={useColorModeValue("gray.800", "white")}
+          >
+            Members
+            <Badge ml={2} colorScheme="blue" borderRadius="full" px={2}>
+              {users.length}
+            </Badge>
+          </Text>
+        </Flex>
+
+        <IconButton
+          aria-label="Toggle Mode"
+          icon={colorMode === "light" ? <FiMoon /> : <FiSun />}
+          onClick={toggleColorMode}
+          variant="ghost"
+          size="md"
+          fontSize="22px"
+          borderRadius="lg"
+          _hover={{
+            bg: useColorModeValue("gray.100", "whiteAlpha.200"),
+            transform: "scale(1.1)",
+          }}
+          transition="all 0.2s"
+        />
       </Flex>
 
       {/* Users List */}
@@ -59,12 +84,12 @@ const UsersList = ({ users }) => {
               <Tooltip label={`${user.username} is online`} placement="left">
                 <Flex
                   p={3}
-                  bg="white"
+                  bg={cardBg}
                   borderRadius="lg"
                   shadow="sm"
                   align="center"
                   borderWidth="1px"
-                  borderColor="gray.100"
+                  borderColor={cardBorder}
                 >
                   <Avatar
                     size="sm"
@@ -77,7 +102,7 @@ const UsersList = ({ users }) => {
                     <Text
                       fontSize="sm"
                       fontWeight="medium"
-                      color="gray.700"
+                      color={userNameColor}
                       noOfLines={1}
                     >
                       {user.username}
@@ -85,7 +110,7 @@ const UsersList = ({ users }) => {
                   </Box>
                   <Flex
                     align="center"
-                    bg="green.50"
+                    bg={onlineBg}
                     px={2}
                     py={1}
                     borderRadius="full"
@@ -96,7 +121,7 @@ const UsersList = ({ users }) => {
                       fontSize="8px"
                       mr={1}
                     />
-                    <Text fontSize="xs" color="green.600" fontWeight="medium">
+                    <Text fontSize="xs" color={onlineColor} fontWeight="medium">
                       online
                     </Text>
                   </Flex>
