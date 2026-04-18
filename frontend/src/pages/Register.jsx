@@ -7,6 +7,7 @@ import {
   VStack,
   Text,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
@@ -53,7 +54,10 @@ const Register = () => {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      bgGradient="linear(to-r, indigo.500, purple.500)"
+      bgGradient={useColorModeValue(
+        "linear(to-r, blue.600, purple.600)",
+        "linear(to-br, blue.900, purple.900)",
+      )}
     >
       <Box
         display="flex"
@@ -98,7 +102,7 @@ const Register = () => {
         {/* Right Panel - Registration Form */}
         <Box
           w={["100%", "100%", "50%"]}
-          bg="white"
+          bg={useColorModeValue("white", "gray.800")}
           p={[6, 8, 10]}
           display="flex"
           flexDirection="column"
@@ -113,7 +117,10 @@ const Register = () => {
 
           <VStack spacing={5} w="100%" maxW="400px" mx="auto">
             <FormControl id="username" isRequired>
-              <FormLabel color="gray.700" fontWeight="medium">
+              <FormLabel
+                color={useColorModeValue("gray.700", "gray.200")}
+                fontWeight="medium"
+              >
                 Username
               </FormLabel>
               <Input
@@ -121,8 +128,8 @@ const Register = () => {
                 onChange={(e) => setUsername(e.target.value)}
                 type="text"
                 size="lg"
-                bg="gray.50"
-                borderColor="gray.200"
+                bg={useColorModeValue("gray.50", "gray.700")}
+                borderColor={useColorModeValue("gray.200", "gray.600")}
                 _hover={{ borderColor: "indigo.500" }}
                 _focus={{ borderColor: "indigo.500" }}
                 placeholder="Choose a username"
@@ -130,7 +137,10 @@ const Register = () => {
             </FormControl>
 
             <FormControl id="email" isRequired>
-              <FormLabel color="gray.700" fontWeight="medium">
+              <FormLabel
+                color={useColorModeValue("gray.700", "gray.200")}
+                fontWeight="medium"
+              >
                 Email
               </FormLabel>
               <Input
@@ -138,8 +148,8 @@ const Register = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 size="lg"
-                bg="gray.50"
-                borderColor="gray.200"
+                bg={useColorModeValue("gray.50", "gray.700")}
+                borderColor={useColorModeValue("gray.200", "gray.600")}
                 _hover={{ borderColor: "indigo.500" }}
                 _focus={{ borderColor: "indigo.500" }}
                 placeholder="Enter your email"
@@ -147,7 +157,10 @@ const Register = () => {
             </FormControl>
 
             <FormControl id="password" isRequired>
-              <FormLabel color="gray.700" fontWeight="medium">
+              <FormLabel
+                color={useColorModeValue("gray.700", "gray.200")}
+                fontWeight="medium"
+              >
                 Password
               </FormLabel>
               <Input
@@ -155,8 +168,8 @@ const Register = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 size="lg"
-                bg="gray.50"
-                borderColor="gray.200"
+                bg={useColorModeValue("gray.50", "gray.700")}
+                borderColor={useColorModeValue("gray.200", "gray.600")}
                 _hover={{ borderColor: "indigo.500" }}
                 _focus={{ borderColor: "indigo.500" }}
                 placeholder="Create a password"
@@ -178,16 +191,14 @@ const Register = () => {
               Create Account
             </Button>
 
-            <Text color="gray.600" pt={4}>
+            <Text color={useColorModeValue("gray.600", "gray.400")}>
               Already have an account?{" "}
               <Link
                 to="/login"
                 style={{
-                  color: "var(--chakra-colors-indigo-600)",
+                  color: "var(--chakra-colors-blue-500)",
                   fontWeight: "500",
-                  transition: "color 0.2s",
                 }}
-                _hover={{ color: "indigo.700" }}
               >
                 Sign in
               </Link>
