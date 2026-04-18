@@ -11,10 +11,13 @@ import {
   Flex,
   VStack,
   HStack,
+  useColorMode,
+  IconButton,
   Badge,
   Input,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
+import { FiSun, FiMoon } from "react-icons/fi";
 import {
   FiMessageSquare,
   FiUsers,
@@ -81,8 +84,8 @@ const ChatMessage = ({ message, sender, time, isUser }) => {
   return (
     <Flex justify={isUser ? "flex-end" : "flex-start"} w="100%">
       <Box
-        bg={isUser ? "blue.500" : "gray.100"}
-        color={isUser ? "white" : "gray.800"}
+        bg={isUser ? "blue.500" : useColorModeValue("gray.100", "gray.700")}
+        color={isUser ? "white" : useColorModeValue("gray.800", "white")}
         borderRadius="lg"
         px={4}
         py={2}
@@ -105,6 +108,7 @@ const ChatMessage = ({ message, sender, time, isUser }) => {
 };
 
 export default function LandingPage() {
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Box
       bg={useColorModeValue("gray.50", "gray.900")}
@@ -149,44 +153,24 @@ export default function LandingPage() {
 
         {/* Navigation Items */}
         <HStack spacing={4}>
-          {" "}
-          <Button
-            as="a"
-            href="#features"
-            variant="ghost"
-            colorScheme="blue"
-            fontSize="lg"
-            fontWeight={600}
-            px={4}
-          >
+          <Button as="a" href="#features" variant="ghost">
             Features
           </Button>
-          <Button
-            as={RouterLink}
-            to="/login"
-            variant="ghost"
-            colorScheme="blue"
-            leftIcon={<FiLogIn />}
-            fontSize="lg"
-            fontWeight={600}
-            px={4}
-          >
+          <Button as={RouterLink} to="/login" variant="ghost">
             Sign In
           </Button>
-          <Button
-            as={RouterLink}
-            to="/register"
-            colorScheme="blue"
-            bg="blue.400"
-            rounded="full"
-            _hover={{ bg: "blue.500" }}
-            fontSize="lg"
-            fontWeight={600}
-            px={8}
-            leftIcon={<FiUserPlus />}
-          >
+          <Button as={RouterLink} to="/register" colorScheme="blue">
             Join Now
           </Button>
+
+          <IconButton
+            icon={colorMode === "light" ? <FiMoon /> : <FiSun />}
+            onClick={toggleColorMode}
+            variant="ghost"
+            aria-label="Toggle Dark Mode"
+            fontSize="xl"
+            ml={2}
+          />
         </HStack>
       </Flex>
       {/* ------------------------------- */}
@@ -287,9 +271,9 @@ export default function LandingPage() {
               boxShadow="2xl"
               width="full"
               overflow="hidden"
-              bg="white"
+              bg={useColorModeValue("white", "gray.800")}
               border="1px"
-              borderColor="gray.200"
+              borderColor={useColorModeValue("gray.200", "gray.700")}
             >
               {/* Chat Header */}
               <Box

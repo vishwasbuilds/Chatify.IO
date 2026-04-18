@@ -7,6 +7,7 @@ import {
   VStack,
   Text,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiLogIn } from "react-icons/fi";
@@ -100,7 +101,7 @@ const Login = () => {
         {/* Right Panel - Login Form */}
         <Box
           w={["100%", "100%", "50%"]}
-          bg="white"
+          bg={useColorModeValue("white", "gray.800")}
           p={[6, 8, 10]}
           display="flex"
           flexDirection="column"
@@ -121,7 +122,10 @@ const Login = () => {
 
           <VStack spacing={6} w="100%" maxW="400px" mx="auto">
             <FormControl id="email" isRequired>
-              <FormLabel color="gray.700" fontWeight="medium">
+              <FormLabel
+                color={useColorModeValue("gray.700", "gray.200")}
+                fontWeight="medium"
+              >
                 Email
               </FormLabel>
               <Input
@@ -130,25 +134,28 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 size="lg"
-                bg="gray.50"
-                borderColor="gray.200"
+                bg={useColorModeValue("gray.50", "gray.700")}
+                borderColor={useColorModeValue("gray.200", "gray.600")}
                 _hover={{ borderColor: "blue.500" }}
                 _focus={{ borderColor: "blue.500" }}
               />
             </FormControl>
 
             <FormControl id="password" isRequired>
-              <FormLabel color="gray.700" fontWeight="medium">
+              <FormLabel
+                color={useColorModeValue("gray.700", "gray.200")}
+                fontWeight="medium"
+              >
                 Password
               </FormLabel>
               <Input
                 type="password"
                 placeholder="Enter your password"
                 size="lg"
-                bg="gray.50"
+                bg={useColorModeValue("gray.50", "gray.700")}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                borderColor="gray.200"
+                borderColor={useColorModeValue("gray.200", "gray.600")}
                 _hover={{ borderColor: "blue.500" }}
                 _focus={{ borderColor: "blue.500" }}
               />
@@ -166,7 +173,7 @@ const Login = () => {
               Sign In
             </Button>
 
-            <Text color="gray.600">
+            <Text color={useColorModeValue("gray.600", "gray.400")}>
               Don't have an account?{" "}
               <Link
                 to="/register"
