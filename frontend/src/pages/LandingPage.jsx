@@ -148,45 +148,45 @@ export default function LandingPage() {
         </HStack>
 
         {/* Navigation Items */}
-        <HStack spacing={10}>
-          <Text
+        <HStack spacing={4}>
+          {" "}
+          <Button
             as="a"
             href="#features"
-            fontSize="xl"
-            fontWeight={700}
-            color={useColorModeValue("gray.700", "gray.100")}
-            _hover={{ color: "blue.400", cursor: "pointer" }}
-            transition="all 0.2s"
+            variant="ghost"
+            colorScheme="blue"
+            fontSize="lg"
+            fontWeight={600}
+            px={4}
           >
             Features
-          </Text>
-          <HStack spacing={4}>
-            <Button
-              as={RouterLink}
-              to="/login"
-              variant="ghost"
-              colorScheme="blue"
-              leftIcon={<FiLogIn />}
-              fontSize="lg"
-              fontWeight={600}
-            >
-              Sign In
-            </Button>
-            <Button
-              as={RouterLink}
-              to="/register"
-              colorScheme="blue"
-              bg="blue.400"
-              rounded="full"
-              _hover={{ bg: "blue.500" }}
-              fontSize="lg"
-              fontWeight={600}
-              px={8}
-              leftIcon={<FiUserPlus />}
-            >
-              Join Now
-            </Button>
-          </HStack>
+          </Button>
+          <Button
+            as={RouterLink}
+            to="/login"
+            variant="ghost"
+            colorScheme="blue"
+            leftIcon={<FiLogIn />}
+            fontSize="lg"
+            fontWeight={600}
+            px={4}
+          >
+            Sign In
+          </Button>
+          <Button
+            as={RouterLink}
+            to="/register"
+            colorScheme="blue"
+            bg="blue.400"
+            rounded="full"
+            _hover={{ bg: "blue.500" }}
+            fontSize="lg"
+            fontWeight={600}
+            px={8}
+            leftIcon={<FiUserPlus />}
+          >
+            Join Now
+          </Button>
         </HStack>
       </Flex>
       {/* ------------------------------- */}
