@@ -14,7 +14,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
-    origin: ["http://localhost:5173", "https://chatify-io.com"],
+    origin: "*",
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -31,18 +31,32 @@ mongoose
 //Initialize
 socketIo(io);
 //our routes
-app.get("/", (req, res) => {
-  res.json({
-    project: "MERN Chat App using Socket.IO",
-    message: "Welcome to MERN Chat Application",
-    developedBy: "R Vishwas",
-    website: "www.Chatify.IO.com",
-  });
-});
+// app.get("/", (req, res) => {
+//   res.json({
+//     project: "MERN Chat App using Socket.IO",
+//     message: "Welcome to MERN Chat Application",
+//     developedBy: "R Vishwas",
+//     website: "www.Chatify.IO.com",
+//   });
+// });
 app.use("/api/users", userRouter);
 app.use("/api/groups", groupRouter);
 app.use("/api/messages", messageRouter);
 
 //start the server
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, console.log("Server is up and running on port", PORT));
+// -------------------------- DEPLOYMENT --------------------------
+const path = require("path");
+const __dirname1 = path.resolve();
+
+if (process.env.NODE_ENV === "production" || true) {
+  app.use(express.static(path.join(__dirname1, "/frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname1, "frontend", "dist", "index.html"));
+  });
+}
+// -------------------------- DEPLOYMENT --------------------------
+server.listen(PORT, () =>
+  console.log("Server is up and running on port", PORT),
+);
