@@ -51,7 +51,9 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup, fetchGroups }) => {
   } = useDisclosure();
 
   const currentUser = JSON.parse(localStorage.getItem("userInfo") || "{}");
-  const isMember = selectedGroup?.members?.includes(currentUser?._id);
+  const isMember =
+    selectedGroup?.members?.some((m) => (m._id || m) === currentUser?._id) ||
+    selectedGroup?.admin?._id === currentUser?._id;
 
   useEffect(() => {
     if (selectedGroup && socket) {
@@ -117,9 +119,9 @@ const ChatArea = ({ selectedGroup, socket, setSelectedGroup, fetchGroups }) => {
         socket.off("user stop typing");
       };
     }
-  }, [selectedGroup?._id, socket]);
+  }, [selectedGroup, socket]);
 
-  // New block for Auto-Scrolling
+  // Auto-Scrolling
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
